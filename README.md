@@ -10,9 +10,6 @@ A geospatial web application for managing and discovering wildlife conservation 
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Testing](#testing)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features ✨
 
