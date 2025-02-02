@@ -1,16 +1,23 @@
-# app/controllers/wildlife_locations_controller.rb
 class WildlifeLocationsController < ApplicationController
   def index
-    @wildlife_locations = WildlifeLocation.all
-    if params[:latitude] && params[:longitude] && params[:radius]
-      locations = WildlifeLocation.nearby(params[:latitude].to_f, params[:longitude].to_f, params[:radius].to_i)
+    if params[:search_location].present? && params[:radius].present?
+      results = Geocoder.search(params[:search_location])
+      if results.present?
+        lat = results.first.latitude
+        lon = results.first.longitude
+        radius_meters = params[:radius].to_f * 1000
+        @wildlife_locations = WildlifeLocation.nearby(lat, lon, radius_meters)
+      else
+        @wildlife_locations = WildlifeLocation.none
+      end
     else
-      locations = WildlifeLocation.all
+      @wildlife_locations = WildlifeLocation.all
     end
+
     respond_to do |format|
       format.turbo_stream
       format.html
-      format.json { render json: locations }
+      format.json { render json: @wildlife_locations }
     end
   end
 
