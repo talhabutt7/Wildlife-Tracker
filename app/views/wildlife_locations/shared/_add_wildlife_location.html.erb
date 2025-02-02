@@ -1,3 +1,4 @@
+<!-- app/views/wildlife_locations/shared/_add_wildlife_location.html.erb -->
 <div class="wt-card">
   <h3>Add a New Conservation Site</h3>
   <%= form_with(model: WildlifeLocation.new, url: wildlife_locations_path, data: { turbo_frame: "locations" }) do |form| %>
@@ -20,8 +21,8 @@
   <!-- List of Conservation Sites -->
   <div id="sites_list" style="margin-top: 20px;">
     <h4 class="wt-text-center">Current Sites</h4>
-    <ul class="wt-list">
-      <% wildlife_locations.each do |site| %>
+    <ul class="wt-list wt-text-center">
+      <% @wildlife_locations.each do |site| %>
         <li>
           <strong><%= site.name %></strong> (Lat: <%= site.latitude %>, Lon: <%= site.longitude %>)
         </li>
