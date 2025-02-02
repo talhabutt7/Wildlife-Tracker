@@ -1,0 +1,2 @@
+module WildlifeLocationsHelper
+end

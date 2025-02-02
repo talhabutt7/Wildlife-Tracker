@@ -1,0 +1,5 @@
+# app/views/wildlife_locations/index.html.erb
+<%= turbo_frame_tag "locations" do %>
+  <div id="map" style="height: 500px;"></div>
+  <%= render @locations %>
+<% end %>
