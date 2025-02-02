@@ -1,17 +1,16 @@
-<!-- Search Form -->
-<div style="flex: 1; min-width: 300px; max-width: 450px; padding: 20px; background: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-  <h3 style="margin-bottom: 15px; text-align: center;">Search Conservation Sites</h3>
+<div class="wt-card">
+  <h3>Search Conservation Sites</h3>
   <%= form_with url: wildlife_locations_path, method: :get, local: true do |form| %>
-    <div style="margin-bottom: 10px;">
-      <%= form.label :search_location, "Location", style: "display: block; font-weight: bold;" %>
-      <%= form.text_field :search_location, value: params[:search_location], style: "width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" %>
+    <div class="wt-form-group">
+      <%= form.label :search_location, "Location", class: "wt-form-label" %>
+      <%= form.text_field :search_location, value: params[:search_location], class: "wt-form-input" %>
     </div>
-    <div style="margin-bottom: 10px;">
-      <%= form.label :radius, "Radius (km)", style: "display: block; font-weight: bold;" %>
-      <%= form.text_field :radius, value: params[:radius], style: "width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" %>
+    <div class="wt-form-group">
+      <%= form.label :radius, "Radius (km)", class: "wt-form-label" %>
+      <%= form.text_field :radius, value: params[:radius], class: "wt-form-input" %>
     </div>
-    <div style="text-align: center;">
-      <%= form.submit "Search", style: "background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;" %>
+    <div class="wt-text-center">
+      <%= form.submit "Search", class: "wt-btn wt-btn-success" %>
     </div>
   <% end %>
 </div>

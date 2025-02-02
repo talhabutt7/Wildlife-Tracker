@@ -1,17 +1,16 @@
-<!-- app/views/wildlife_locations/index.html.erb -->
 <%= turbo_frame_tag "locations" do %>
   <!-- Map Display -->
   <div id="map" data-controller="map"
        data-map-center-lat="<%= @center_lat %>"
        data-map-center-lon="<%= @center_lon %>"
-       style="height: 500px; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
-  <hr style="margin: 30px 0; border-top: 1px solid #ccc;">
+       class="wt-map"></div>
+  <hr class="wt-hr">
 
-  <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+  <div class="wt-container">
     <%= render partial: "wildlife_locations/shared/flash_message" %>
     <!-- Forms Container -->
-    <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-around;">
-      <%= render partial: "wildlife_locations/shared/search_location"%>
+    <div class="wt-flex-container">
+      <%= render partial: "wildlife_locations/shared/search_location" %>
       <%= render partial: "wildlife_locations/shared/add_wildlife_location", locals: { wildlife_locations: @wildlife_locations } %>
     </div>
   </div>

@@ -1,29 +1,28 @@
-<!-- Add New Conservation Site Form -->
-<div style="flex: 1; min-width: 300px; max-width: 450px; padding: 20px; background: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-  <h3 style="margin-bottom: 15px; text-align: center;">Add a New Conservation Site</h3>
+<div class="wt-card">
+  <h3>Add a New Conservation Site</h3>
   <%= form_with(model: WildlifeLocation.new, url: wildlife_locations_path, data: { turbo_frame: "locations" }) do |form| %>
-    <div style="margin-bottom: 10px;">
-      <%= form.label :name, style: "display: block; font-weight: bold;" %>
-      <%= form.text_field :name, style: "width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" %>
+    <div class="wt-form-group">
+      <%= form.label :name, class: "wt-form-label" %>
+      <%= form.text_field :name, class: "wt-form-input" %>
     </div>
-    <div style="margin-bottom: 10px;">
-      <%= form.label :latitude, style: "display: block; font-weight: bold;" %>
-      <%= form.text_field :latitude, style: "width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" %>
+    <div class="wt-form-group">
+      <%= form.label :latitude, class: "wt-form-label" %>
+      <%= form.text_field :latitude, class: "wt-form-input" %>
     </div>
-    <div style="margin-bottom: 10px;">
-      <%= form.label :longitude, style: "display: block; font-weight: bold;" %>
-      <%= form.text_field :longitude, style: "width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" %>
+    <div class="wt-form-group">
+      <%= form.label :longitude, class: "wt-form-label" %>
+      <%= form.text_field :longitude, class: "wt-form-input" %>
     </div>
-    <div style="text-align: center;">
-      <%= form.submit "Add Conservation Site", style: "background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;" %>
+    <div class="wt-text-center">
+      <%= form.submit "Add Conservation Site", class: "wt-btn wt-btn-primary" %>
     </div>
   <% end %>
   <!-- List of Conservation Sites -->
   <div id="sites_list" style="margin-top: 20px;">
-    <h4 style="text-align: center;">Current Sites</h4>
-    <ul style="list-style: none; padding: 0;">
+    <h4 class="wt-text-center">Current Sites</h4>
+    <ul class="wt-list">
       <% wildlife_locations.each do |site| %>
-        <li style="padding: 8px; border-bottom: 1px solid #eee;">
+        <li>
           <strong><%= site.name %></strong> (Lat: <%= site.latitude %>, Lon: <%= site.longitude %>)
         </li>
       <% end %>
