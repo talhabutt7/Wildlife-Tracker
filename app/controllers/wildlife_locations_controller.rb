@@ -1,16 +1,26 @@
 class WildlifeLocationsController < ApplicationController
   def index
-    if params[:search_location].present? && params[:radius].present?
-      results = Geocoder.search(params[:search_location])
-      if results.present?
-        @center_lat = results.first.latitude
-        @center_lon = results.first.longitude
-        radius_meters = params[:radius].to_f * 1000
-        @wildlife_locations = WildlifeLocation.nearby(@center_lat, @center_lon, radius_meters)
-        flash.now[:notice] = "No conservation sites found in that area." if @wildlife_locations.empty?
+    if params[:search_location].present? || params[:radius].present?
+      # Validate that both search_location and radius are provided
+      if params[:search_location].blank? || params[:radius].blank?
+        flash.now[:alert] = "Please enter a valid location and radius."
+        @wildlife_locations = WildlifeLocation.all
+        @center_lat = 54.0
+        @center_lon = -2.0
       else
-        @wildlife_locations = WildlifeLocation.none
-        flash.now[:alert] = "Location not found."
+        results = Geocoder.search(params[:search_location])
+        if results.present?
+          @center_lat = results.first.latitude
+          @center_lon = results.first.longitude
+          radius_meters = params[:radius].to_f * 1000
+          @wildlife_locations = WildlifeLocation.nearby(@center_lat, @center_lon, radius_meters)
+          flash.now[:notice] = "No conservation sites found nearby." if @wildlife_locations.empty?
+        else
+          flash.now[:alert] = "Location not found. Please enter a valid location."
+          @wildlife_locations = WildlifeLocation.all
+          @center_lat = 54.0
+          @center_lon = -2.0
+        end
       end
     else
       @wildlife_locations = WildlifeLocation.all
@@ -30,10 +40,13 @@ class WildlifeLocationsController < ApplicationController
     if @wildlife_location.save
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to wildlife_locations_path, notice: "Site added." }
+        format.html { redirect_to wildlife_locations_path, notice: "Conservation site added." }
       end
     else
-      render json: @wildlife_location.errors, status: :unprocessable_entity
+      # Render errors for the form submission without reloading the page
+      flash.now[:alert] = @wildlife_location.errors.full_messages.to_sentence
+      @wildlife_locations = WildlifeLocation.all
+      render :index, status: :unprocessable_entity
     end
   end
 
