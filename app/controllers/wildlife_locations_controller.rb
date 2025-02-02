@@ -1,12 +1,10 @@
 class WildlifeLocationsController < ApplicationController
   def index
+    # Process search if either location or radius parameter is provided
     if params[:search_location].present? || params[:radius].present?
-      # Validate that both search_location and radius are provided
       if params[:search_location].blank? || params[:radius].blank?
         flash.now[:alert] = "Please enter a valid location and radius."
-        @wildlife_locations = WildlifeLocation.all
-        @center_lat = 54.0
-        @center_lon = -2.0
+        load_default_locations
       else
         results = Geocoder.search(params[:search_location])
         if results.present?
@@ -17,15 +15,11 @@ class WildlifeLocationsController < ApplicationController
           flash.now[:notice] = "No conservation sites found nearby." if @wildlife_locations.empty?
         else
           flash.now[:alert] = "Location not found. Please enter a valid location."
-          @wildlife_locations = WildlifeLocation.all
-          @center_lat = 54.0
-          @center_lon = -2.0
+          load_default_locations
         end
       end
     else
-      @wildlife_locations = WildlifeLocation.all
-      @center_lat = 54.0
-      @center_lon = -2.0
+      load_default_locations
     end
 
     respond_to do |format|
@@ -43,7 +37,6 @@ class WildlifeLocationsController < ApplicationController
         format.html { redirect_to wildlife_locations_path, notice: "Conservation site added." }
       end
     else
-      # Render errors for the form submission without reloading the page
       flash.now[:alert] = @wildlife_location.errors.full_messages.to_sentence
       @wildlife_locations = WildlifeLocation.all
       render :index, status: :unprocessable_entity
@@ -51,6 +44,13 @@ class WildlifeLocationsController < ApplicationController
   end
 
   private
+
+  # Fallback to default location (entire UK) and all sites
+  def load_default_locations
+    @wildlife_locations = WildlifeLocation.all
+    @center_lat = 54.0
+    @center_lon = -2.0
+  end
 
   def location_params
     params.require(:wildlife_location).permit(:name, :latitude, :longitude)

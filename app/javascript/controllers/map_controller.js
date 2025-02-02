@@ -1,4 +1,3 @@
-// app/javascript/controllers/map_controller.js
 import { Controller } from "@hotwired/stimulus"
 import L from "leaflet"
 
@@ -8,6 +7,7 @@ export default class extends Controller {
         this.loadMarkers()
     }
 
+    // Initialize the map using provided center data or defaults
     initializeMap() {
         const centerLat = parseFloat(this.data.get('centerLat')) || 54.0
         const centerLon = parseFloat(this.data.get('centerLon')) || -2.0
@@ -18,15 +18,14 @@ export default class extends Controller {
         }).addTo(this.map)
     }
 
+    // Fetch conservation sites and add markers to the map
     loadMarkers() {
         fetch('/wildlife_locations.json')
             .then(response => response.json())
             .then(data => {
                 if (data.length === 0) {
                     const msgDiv = document.getElementById('map-message')
-                    if (msgDiv) {
-                        msgDiv.innerText = "No conservation sites found nearby."
-                    }
+                    if (msgDiv) { msgDiv.innerText = "No conservation sites found nearby." }
                 }
                 data.forEach(site => {
                     L.marker([parseFloat(site.latitude), parseFloat(site.longitude)])
