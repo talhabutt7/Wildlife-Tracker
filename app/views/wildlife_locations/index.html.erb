@@ -1,5 +1,30 @@
-# app/views/wildlife_locations/index.html.erb
+<!-- app/views/wildlife_locations/index.html.erb -->
 <%= turbo_frame_tag "locations" do %>
-  <div id="map" style="height: 500px;"></div>
-  <%= render @locations %>
+  <div id="map" data-controller="map" style="height: 500px;"></div>
+  <hr>
+  <h3>Add a New Conservation Site</h3>
+  <%= form_with(model: WildlifeLocation.new, url: wildlife_locations_path, data: { turbo_frame: "locations" }) do |form| %>
+    <div>
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+    <div>
+      <%= form.label :latitude %>
+      <%= form.text_field :latitude %>
+    </div>
+    <div>
+      <%= form.label :longitude %>
+      <%= form.text_field :longitude %>
+    </div>
+    <div>
+      <%= form.submit "Add Conservation Site" %>
+    </div>
+  <% end %>
+  <div id="sites_list">
+    <ul>
+      <% @wildlife_locations.each do |site| %>
+        <li><%= site.name %> (Lat: <%= site.latitude %>, Lon: <%= site.longitude %>)</li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
