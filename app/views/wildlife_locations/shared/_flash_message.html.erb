@@ -1,0 +1,8 @@
+<!-- Display Flash Messages -->
+<div id="map-message" style="color: red; margin-bottom: 15px; font-size: 1.1em; text-align: center;">
+  <% if flash.now[:alert].present? %>
+    <%= flash.now[:alert] %>
+  <% elsif flash.now[:notice].present? %>
+    <%= flash.now[:notice] %>
+  <% end %>
+</div>
