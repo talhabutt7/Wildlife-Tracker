@@ -16,8 +16,16 @@
     </div>
   <% end %>
 
+  <!-- Map Message -->
+  <div id="map-message" style="color: red; margin-bottom: 10px;">
+    <%= flash.now[:notice] || flash.now[:alert] %>
+  </div>
+
   <!-- Map Display -->
-  <div id="map" data-controller="map" style="height: 500px;"></div>
+  <div id="map" data-controller="map"
+       data-map-center-lat="<%= @center_lat %>"
+       data-map-center-lon="<%= @center_lon %>"
+       style="height: 500px;"></div>
   <hr>
 
   <!-- Add New Conservation Site Form -->

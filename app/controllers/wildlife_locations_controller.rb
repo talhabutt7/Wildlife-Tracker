@@ -3,15 +3,19 @@ class WildlifeLocationsController < ApplicationController
     if params[:search_location].present? && params[:radius].present?
       results = Geocoder.search(params[:search_location])
       if results.present?
-        lat = results.first.latitude
-        lon = results.first.longitude
+        @center_lat = results.first.latitude
+        @center_lon = results.first.longitude
         radius_meters = params[:radius].to_f * 1000
-        @wildlife_locations = WildlifeLocation.nearby(lat, lon, radius_meters)
+        @wildlife_locations = WildlifeLocation.nearby(@center_lat, @center_lon, radius_meters)
+        flash.now[:notice] = "No conservation sites found in that area." if @wildlife_locations.empty?
       else
         @wildlife_locations = WildlifeLocation.none
+        flash.now[:alert] = "Location not found."
       end
     else
       @wildlife_locations = WildlifeLocation.all
+      @center_lat = 54.0
+      @center_lon = -2.0
     end
 
     respond_to do |format|
