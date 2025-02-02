@@ -1,0 +1,107 @@
+// app/assets/stylesheets/wildlife_tracker.scss
+
+// Main container
+.wt-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+// Flash message styling
+.wt-flash-message {
+  color: red;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+// Map container styling
+.wt-map {
+  height: 500px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+// Horizontal rule styling
+.wt-hr {
+  margin: 30px 0;
+  border-top: 1px solid #ccc;
+}
+
+// Flex container for forms
+.wt-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-around;
+}
+
+// Card styling for individual forms
+.wt-card {
+  flex: 1;
+  min-width: 300px;
+  max-width: 450px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wt-card h3,
+.wt-card h4 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+// Form group and input styling
+.wt-form-group {
+  margin-bottom: 10px;
+}
+
+.wt-form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.wt-form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+// Button styling
+.wt-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.wt-btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.wt-btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.wt-text-center {
+  text-align: center;
+}
+
+// List styling for conservation sites
+.wt-list {
+  list-style: none;
+  padding: 0;
+}
+
+.wt-list li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
