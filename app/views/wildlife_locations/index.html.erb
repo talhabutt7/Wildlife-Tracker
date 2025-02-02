@@ -1,59 +1,18 @@
 <!-- app/views/wildlife_locations/index.html.erb -->
 <%= turbo_frame_tag "locations" do %>
-  <!-- Search Form -->
-  <h3>Search Conservation Sites</h3>
-  <%= form_with url: wildlife_locations_path, method: :get, local: true do |form| %>
-    <div>
-      <%= form.label :search_location, "Location" %>
-      <%= form.text_field :search_location %>
-    </div>
-    <div>
-      <%= form.label :radius, "Radius (km)" %>
-      <%= form.text_field :radius %>
-    </div>
-    <div>
-      <%= form.submit "Search" %>
-    </div>
-  <% end %>
-
-  <!-- Map Message -->
-  <div id="map-message" style="color: red; margin-bottom: 10px;">
-    <%= flash.now[:notice] || flash.now[:alert] %>
-  </div>
-
   <!-- Map Display -->
   <div id="map" data-controller="map"
        data-map-center-lat="<%= @center_lat %>"
        data-map-center-lon="<%= @center_lon %>"
-       style="height: 500px;"></div>
-  <hr>
+       style="height: 500px; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+  <hr style="margin: 30px 0; border-top: 1px solid #ccc;">
 
-  <!-- Add New Conservation Site Form -->
-  <h3>Add a New Conservation Site</h3>
-  <%= form_with(model: WildlifeLocation.new, url: wildlife_locations_path, data: { turbo_frame: "locations" }) do |form| %>
-    <div>
-      <%= form.label :name %>
-      <%= form.text_field :name %>
+  <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+    <%= render partial: "wildlife_locations/shared/flash_message" %>
+    <!-- Forms Container -->
+    <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-around;">
+      <%= render partial: "wildlife_locations/shared/search_location"%>
+      <%= render partial: "wildlife_locations/shared/add_wildlife_location", locals: { wildlife_locations: @wildlife_locations } %>
     </div>
-    <div>
-      <%= form.label :latitude %>
-      <%= form.text_field :latitude %>
-    </div>
-    <div>
-      <%= form.label :longitude %>
-      <%= form.text_field :longitude %>
-    </div>
-    <div>
-      <%= form.submit "Add Conservation Site" %>
-    </div>
-  <% end %>
-
-  <!-- List of Conservation Sites -->
-  <div id="sites_list">
-    <ul>
-      <% @wildlife_locations.each do |site| %>
-        <%= render partial: "wildlife_locations/site", locals: { site: site } %>
-      <% end %>
-    </ul>
   </div>
 <% end %>
