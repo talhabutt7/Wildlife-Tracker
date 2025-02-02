@@ -1,6 +1,26 @@
+<!-- app/views/wildlife_locations/index.html.erb -->
 <%= turbo_frame_tag "locations" do %>
+  <!-- Search Form -->
+  <h3>Search Conservation Sites</h3>
+  <%= form_with url: wildlife_locations_path, method: :get, local: true do |form| %>
+    <div>
+      <%= form.label :search_location, "Location" %>
+      <%= form.text_field :search_location %>
+    </div>
+    <div>
+      <%= form.label :radius, "Radius (km)" %>
+      <%= form.text_field :radius %>
+    </div>
+    <div>
+      <%= form.submit "Search" %>
+    </div>
+  <% end %>
+
+  <!-- Map Display -->
   <div id="map" data-controller="map" style="height: 500px;"></div>
   <hr>
+
+  <!-- Add New Conservation Site Form -->
   <h3>Add a New Conservation Site</h3>
   <%= form_with(model: WildlifeLocation.new, url: wildlife_locations_path, data: { turbo_frame: "locations" }) do |form| %>
     <div>
@@ -19,6 +39,8 @@
       <%= form.submit "Add Conservation Site" %>
     </div>
   <% end %>
+
+  <!-- List of Conservation Sites -->
   <div id="sites_list">
     <ul>
       <% @wildlife_locations.each do |site| %>
