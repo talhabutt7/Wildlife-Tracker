@@ -71,3 +71,4 @@ gem 'hotwire-rails' # For Turbo Frames and Streams
 gem 'devise' # User Authentication
 gem 'geocoder' # Geocoding and Reverse Geocoding
 gem 'activerecord-postgis-adapter' # Enable PostGIS support
+gem 'sassc-rails'
