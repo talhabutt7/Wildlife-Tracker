@@ -1,2 +1,3 @@
-<%= turbo_stream.append "sites_list", partial: "wildlife_locations/site", locals: { site: @wildlife_location } %>
+<!--create.turbo.stream.erb-->
+<%= turbo_stream.append "sites_list", partial: "wildlife_locations/shared/site", locals: { site: @wildlife_location } %>
 <%= turbo_stream.after "map", "<script>window.dispatchEvent(new CustomEvent('marker:added', { detail: { latitude: '#{@wildlife_location.latitude}', longitude: '#{@wildlife_location.longitude}', name: '#{@wildlife_location.name}' } }));</script>".html_safe %>
