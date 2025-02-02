@@ -11,7 +11,7 @@ export default class extends Controller {
     initializeMap() {
         const centerLat = parseFloat(this.data.get('centerLat')) || 54.0
         const centerLon = parseFloat(this.data.get('centerLon')) || -2.0
-        this.map = L.map(this.element).setView([centerLat, centerLon], 13)
+        this.map = L.map(this.element).setView([centerLat, centerLon], 11)
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: "Map data © OpenStreetMap contributors",
             maxZoom: 19
@@ -25,7 +25,7 @@ export default class extends Controller {
                 if (data.length === 0) {
                     const msgDiv = document.getElementById('map-message')
                     if (msgDiv) {
-                        msgDiv.innerText = "No conservation sites found in that area."
+                        msgDiv.innerText = "No conservation sites found nearby."
                     }
                 }
                 data.forEach(site => {
