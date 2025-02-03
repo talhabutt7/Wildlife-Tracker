@@ -1,25 +1,25 @@
 class WildlifeLocationsController < ApplicationController
   def index
     @wildlife_locations = WildlifeLocation.all
-    # Process search if either location or radius parameter is provided
-    if params[:search_location].present? || params[:radius].present?
-      if params[:search_location].blank? || params[:radius].blank?
-        flash.now[:alert] = "Please enter a valid location and radius."
-        load_default_locations
+
+    # Process search only if both location and radius parameters are provided
+    if params[:search_location].present? && params[:radius].present?
+      results = Geocoder.search(params[:search_location])
+      if results.present?
+        @center_lat = results.first.latitude
+        @center_lon = results.first.longitude
+        radius_meters = params[:radius].to_f * 1000
+        @nearby_locations = WildlifeLocation.nearby(@center_lat, @center_lon, radius_meters)
+        flash.now[:notice] = "No conservation sites found nearby." if @nearby_locations.empty?
       else
-        results = Geocoder.search(params[:search_location])
-        if results.present?
-          @center_lat = results.first.latitude
-          @center_lon = results.first.longitude
-          radius_meters = params[:radius].to_f * 1000
-          @nearby_locations = WildlifeLocation.nearby(@center_lat, @center_lon, radius_meters)
-          flash.now[:notice] = "No conservation sites found nearby." if @nearby_locations.empty?
-        else
-          flash.now[:alert] = "Location not found. Please enter a valid location."
-          load_default_locations
-        end
+        flash.now[:alert] = "Location not found. Please enter a valid location."
+        load_default_locations
       end
     else
+      # Handle invalid or missing search parameters
+      if params[:search_location].present? || params[:radius].present?
+        flash.now[:alert] = "Please enter a valid location and radius."
+      end
       load_default_locations
     end
 
