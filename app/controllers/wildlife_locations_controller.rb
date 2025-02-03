@@ -1,5 +1,6 @@
 class WildlifeLocationsController < ApplicationController
   def index
+    @wildlife_locations = WildlifeLocation.all
     # Process search if either location or radius parameter is provided
     if params[:search_location].present? || params[:radius].present?
       if params[:search_location].blank? || params[:radius].blank?
@@ -11,8 +12,8 @@ class WildlifeLocationsController < ApplicationController
           @center_lat = results.first.latitude
           @center_lon = results.first.longitude
           radius_meters = params[:radius].to_f * 1000
-          @wildlife_locations = WildlifeLocation.nearby(@center_lat, @center_lon, radius_meters)
-          flash.now[:notice] = "No conservation sites found nearby." if @wildlife_locations.empty?
+          @nearby_locations = WildlifeLocation.nearby(@center_lat, @center_lon, radius_meters)
+          flash.now[:notice] = "No conservation sites found nearby." if @nearby_locations.empty?
         else
           flash.now[:alert] = "Location not found. Please enter a valid location."
           load_default_locations

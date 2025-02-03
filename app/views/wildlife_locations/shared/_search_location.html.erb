@@ -11,16 +11,16 @@
       <%= form.text_field :radius, value: params[:radius], class: "wt-form-input" %>
     </div>
     <div class="wt-text-center">
-      <%= form.submit "Search", class: "wt-btn wt-btn-success" %>
+      <%= form.submit "Search Nearby Site", class: "wt-btn wt-btn-success" %>
     </div>
   <% end %>
 
   <!-- Search Results Section -->
   <turbo-frame id="search_results">
-    <% if @wildlife_locations.present? %>
+    <% if @nearby_locations.present? %>
       <h4 class="wt-text-center">Nearby Sites</h4>
       <ul class="wt-list wt-text-center">
-        <% @wildlife_locations.each do |site| %>
+        <% @nearby_locations.each do |site| %>
           <li>
             <strong><%= site.name %></strong> (Lat: <%= site.latitude %>, Lon: <%= site.longitude %>)
           </li>

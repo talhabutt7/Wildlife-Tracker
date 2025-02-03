@@ -21,12 +21,16 @@
   <!-- List of Conservation Sites -->
   <div id="sites_list" style="margin-top: 20px;">
     <h4 class="wt-text-center">Current Sites</h4>
-    <ul class="wt-list wt-text-center">
-      <% @wildlife_locations.each do |site| %>
-        <li>
-          <strong><%= site.name %></strong> (Lat: <%= site.latitude %>, Lon: <%= site.longitude %>)
-        </li>
-      <% end %>
+    <% if @nearby_locations.present? %>
+      <ul class="wt-list wt-text-center">
+        <% @wildlife_locations.each do |site| %>
+          <li>
+            <strong><%= site.name %></strong> (Lat: <%= site.latitude %>, Lon: <%= site.longitude %>)
+          </li>
+        <% end %>
+    <% else %>
+      <strong> No site available</strong>
+    <% end %>
     </ul>
   </div>
 </div>
